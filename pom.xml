@@ -76,7 +76,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <version></version>
             </plugin>
         </plugins>
     </build>
