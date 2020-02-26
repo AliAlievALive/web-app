@@ -19,24 +19,23 @@ public class AutoService {
         try (var conn = ds.getConnection()){
             try (var stmt = conn.createStatement()) {
                 stmt.execute(
-                        "CREATE TABLE IF NOT EXISTS autos (id TEXT PRIMARY KEY, name TEXT NOT NULL, " +
-                                "description TEXT NOT NULL, image TEXT);");
+                        "CREATE TABLE IF NOT EXISTS autos (id TEXT PRIMARY KEY, name TEXT NOT NULL, description TEXT NOT NULL, image TEXT);");
             }
         }
     }
 
     public List<Auto> getAll() throws SQLException {
-        try (var conn = ds.getConnection()) {
-            try (var stmt = conn.createStatement()) {
-                try (var rs = stmt.executeQuery("SELECT id, name, description, image FROM autos;")) {
+        try (var connection = ds.getConnection()) {
+            try (var statement = connection.createStatement()) {
+                try (var resultSet = statement.executeQuery("SELECT id, name, description, image FROM autos;")) {
                     var list = new ArrayList<Auto>();
 
-                    while (rs.next()) {
+                    while (resultSet.next()) {
                         list.add(new Auto(
-                                rs.getString("id"),
-                                rs.getString("name"),
-                                rs.getString("description"),
-                                rs.getString("image")
+                                resultSet.getString("id"),
+                                resultSet.getString("name"),
+                                resultSet.getString("description"),
+                                resultSet.getString("image")
                                 ));
                     }
 
