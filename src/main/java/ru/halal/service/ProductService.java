@@ -1,6 +1,6 @@
 package ru.halal.service;
 
-import ru.halal.domain.Auto;
+import ru.halal.domain.Product;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AutoService {
+public class ProductService {
     private final DataSource ds;
 
-    public AutoService() throws NamingException, SQLException {
+    public ProductService() throws NamingException, SQLException {
         var context = new InitialContext();
         ds = (DataSource) context.lookup("java:/comp/env/jdbc/db");
         try (var conn = ds.getConnection()) {
@@ -24,14 +24,14 @@ public class AutoService {
         }
     }
 
-    public List<Auto> getAll() throws SQLException {
+    public List<Product> getAll() throws SQLException {
         try (var connection = ds.getConnection()) {
             try (var statement = connection.createStatement()) {
                 try (var resultSet = statement.executeQuery("SELECT id, name, description, image FROM autos;")) {
-                    var list = new ArrayList<Auto>();
+                    var list = new ArrayList<Product>();
 
                     while (resultSet.next()) {
-                        list.add(new Auto(
+                        list.add(new Product(
                                 resultSet.getString("id"),
                                 resultSet.getString("name"),
                                 resultSet.getString("description"),

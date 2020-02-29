@@ -1,6 +1,6 @@
 package ru.halal.servlet;
 
-import ru.halal.service.AutoService;
+import ru.halal.service.ProductService;
 import ru.halal.service.FileService;
 
 import javax.naming.InitialContext;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class CatalogServlet extends HttpServlet {
-    private AutoService autoService;
+    private ProductService productService;
     private FileService fileService;
 
 
@@ -22,7 +22,7 @@ public class CatalogServlet extends HttpServlet {
         InitialContext context = null;
         try {
             context = new InitialContext();
-            autoService = (AutoService) context.lookup("java:/comp/env/bean/auto-service");
+            productService = (ProductService) context.lookup("java:/comp/env/bean/product-service");
             fileService = (FileService) context.lookup("java:/comp/env/bean/file-service");
         } catch (NamingException e) {
             e.printStackTrace();
@@ -33,7 +33,7 @@ public class CatalogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            req.setAttribute("items", autoService.getAll());
+            req.setAttribute("items", productService.getAll());
             req.getRequestDispatcher("/WEB-INF/catalog.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,7 +50,7 @@ public class CatalogServlet extends HttpServlet {
 
             var image = fileService.writeFile(part);
 
-            autoService.create(name, description, image);
+            productService.create(name, description, image);
             resp.sendRedirect(String.join("/", req.getContextPath(), req.getServletPath()));
         } catch (SQLException e) {
             e.printStackTrace();

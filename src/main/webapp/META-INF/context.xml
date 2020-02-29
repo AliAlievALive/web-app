@@ -9,8 +9,8 @@
             closeMethod="close"
     />
     <Resource
-            name="bean/auto-service"
-            type="ru.halal.service.AutoService"
+            name="bean/product-service"
+            type="ru.halal.service.ProductService"
             factory="org.apache.naming.factory.BeanFactory"
     />
     <Resource
