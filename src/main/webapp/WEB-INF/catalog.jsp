@@ -25,9 +25,9 @@
                         <img src="<%= request.getContextPath() %>/images/<%= item.getImage()%>" class="card-img-top"
                              alt="<%= item.getName() %>">
                         <div class="card-body">
-                            <h5 class="card-title"><%= item.getName() %>
+                            <h5 class="card-title"><%= item.getDecoding(item.getName()) %>
                             </h5>
-                            <p class="card-text"><%= item.getDescription() %>
+                            <p class="card-text"><%= item.getDecoding(item.getDescription()) %>
                             </p>
                         </div>
                     </div>
